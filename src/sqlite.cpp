@@ -21,4 +21,13 @@ Statement SQLite::prepare(const std::string& sql, int nByte, unsigned flags)
     return Statement(*this, sql, nByte, flags);
 }
 
+void SQLite::exec(const std::string& sql)
+{
+    auto ec = sqlite3_exec(m_handle, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ec != SQLITE_OK) {
+        auto msg = fmt::format("error executing statement: {}", ec);
+        throw std::runtime_error(msg);
+    }
+}
+
 } // namespace sqlite
