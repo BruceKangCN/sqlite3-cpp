@@ -17,14 +17,14 @@ class SQLITE_PUB Row;
 //! TODO: add move and copy constructors and assignments for classes
 
 class SQLite {
-    using pSqlite3 = sqlite3*;
+    using Sqlite3Ptr = sqlite3*;
 
 public:
     SQLite(const std::string& filename, int flags = SQLITE_OPEN_READWRITE) noexcept;
 
     ~SQLite();
 
-    operator pSqlite3() const noexcept
+    operator Sqlite3Ptr() const noexcept
     {
         return m_handle;
     }
@@ -38,14 +38,14 @@ private:
 };
 
 class Statement {
-    using pStmt = sqlite3_stmt*;
+    using StmtPtr = sqlite3_stmt*;
 
 public:
     Statement(SQLite& db, const std::string& sql, int nByte, unsigned flags = 0);
 
     ~Statement();
 
-    operator pStmt() const noexcept
+    operator StmtPtr() const noexcept
     {
         return m_handle;
     }
